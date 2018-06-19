@@ -17,6 +17,10 @@
 		326EED2920D8EB030055400F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 326EED2220D8EB030055400F /* LaunchScreen.storyboard */; };
 		326EED2A20D8EB030055400F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326EED2320D8EB030055400F /* AppDelegate.swift */; };
 		326EED2C20D8EB2C0055400F /* ListsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326EED2B20D8EB2B0055400F /* ListsTableViewController.swift */; };
+		326EED3220D90D090055400F /* toDoEmpty.004.png in Resources */ = {isa = PBXBuildFile; fileRef = 326EED2E20D90D080055400F /* toDoEmpty.004.png */; };
+		326EED3320D90D090055400F /* toDoEmpty.001.png in Resources */ = {isa = PBXBuildFile; fileRef = 326EED2F20D90D080055400F /* toDoEmpty.001.png */; };
+		326EED3420D90D090055400F /* toDoEmpty.002.png in Resources */ = {isa = PBXBuildFile; fileRef = 326EED3020D90D080055400F /* toDoEmpty.002.png */; };
+		326EED3520D90D090055400F /* toDoEmpty.003.png in Resources */ = {isa = PBXBuildFile; fileRef = 326EED3120D90D080055400F /* toDoEmpty.003.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,10 @@
 		326EED2220D8EB030055400F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		326EED2320D8EB030055400F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "../../to do list/to do list/AppDelegate.swift"; sourceTree = "<group>"; };
 		326EED2B20D8EB2B0055400F /* ListsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsTableViewController.swift; sourceTree = "<group>"; };
+		326EED2E20D90D080055400F /* toDoEmpty.004.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toDoEmpty.004.png; sourceTree = "<group>"; };
+		326EED2F20D90D080055400F /* toDoEmpty.001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toDoEmpty.001.png; sourceTree = "<group>"; };
+		326EED3020D90D080055400F /* toDoEmpty.002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toDoEmpty.002.png; sourceTree = "<group>"; };
+		326EED3120D90D080055400F /* toDoEmpty.003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toDoEmpty.003.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +119,7 @@
 				326EED1D20D8EB020055400F /* AllListsTableViewController.swift */,
 				326EED1E20D8EB020055400F /* ViewController.swift */,
 				326EECFB20D8EAE10055400F /* Info.plist */,
+				326EED2D20D90D080055400F /* toDoEmpty */,
 				326EED2B20D8EB2B0055400F /* ListsTableViewController.swift */,
 			);
 			path = whatevertodo;
@@ -132,6 +141,17 @@
 				326EED1120D8EAE20055400F /* Info.plist */,
 			);
 			path = whatevertodoUITests;
+			sourceTree = "<group>";
+		};
+		326EED2D20D90D080055400F /* toDoEmpty */ = {
+			isa = PBXGroup;
+			children = (
+				326EED2E20D90D080055400F /* toDoEmpty.004.png */,
+				326EED2F20D90D080055400F /* toDoEmpty.001.png */,
+				326EED3020D90D080055400F /* toDoEmpty.002.png */,
+				326EED3120D90D080055400F /* toDoEmpty.003.png */,
+			);
+			path = toDoEmpty;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,7 +260,11 @@
 			files = (
 				326EED2720D8EB030055400F /* Main.storyboard in Resources */,
 				326EED2920D8EB030055400F /* LaunchScreen.storyboard in Resources */,
+				326EED3320D90D090055400F /* toDoEmpty.001.png in Resources */,
 				326EED2620D8EB030055400F /* Assets.xcassets in Resources */,
+				326EED3520D90D090055400F /* toDoEmpty.003.png in Resources */,
+				326EED3220D90D090055400F /* toDoEmpty.004.png in Resources */,
+				326EED3420D90D090055400F /* toDoEmpty.002.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

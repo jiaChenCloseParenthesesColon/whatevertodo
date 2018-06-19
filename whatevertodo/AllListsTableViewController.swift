@@ -13,14 +13,15 @@ var getAllItems:[String] = ["stuff"]
 
 class AllListsTableViewController: UITableViewController {
 
+    var tableBackground = UIImageView()
     
     var isEmpty = false
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.isHidden = isEmpty
-        let tableBackground = tableView.backgroundView as! UIImageView
-        tableBackground.image = UIImage(named: "hello.png")
-        tableBackground.contentMode = .scaleAspectFit
+        tableView.backgroundView?.contentMode = .scaleAspectFit
+        
+        //tableBackground.contentMode = .scaleAspectFit
         
         if UserDefaults.standard.array(forKey: "allLists") == nil {
             getAllItems =  ["Get Started!"]
@@ -52,7 +53,7 @@ class AllListsTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         if getAllItems.count == 0 {
             isEmpty = true
-            return 1
+            return 0
         } else {return getAllItems.count}
         
     }
@@ -60,7 +61,9 @@ class AllListsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+        if isEmpty == true {
+            //tableView.backgroundView = UIImageView(image: UIImage(named: "toDoEmpty.00\(Int.random(in: 1...4)).png"))
+        }
         
         cell.textLabel?.text = getAllItems[indexPath.row]
         // Configure the cell...
@@ -84,6 +87,7 @@ class AllListsTableViewController: UITableViewController {
             // Delete the row from the data source
             getAllItems.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .right)
+            tableView.reloadData()
             
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
