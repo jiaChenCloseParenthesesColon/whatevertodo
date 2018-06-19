@@ -13,12 +13,32 @@ var getAllItems:[String] = ["stuff"]
 
 class AllListsTableViewController: UITableViewController {
 
-    var tableBackground = UIImageView()
-    
     var isEmpty = false
+    
+    let backgroundImage = UIImageView()
+    
+    func emptyCells() {
+        let rect = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+        
+        
+        backgroundImage.frame = rect
+        
+        if getAllItems.count == 0 {
+            print("empty cells")
+            backgroundImage.isHidden = false
+            backgroundImage.sizeToFit()
+            backgroundImage.contentMode = .scaleAspectFit
+            backgroundImage.image = UIImage(named: "toDoEmpty.00\(Int.random(in: 1...4)).png")
+            self.tableView.backgroundView = backgroundImage
+        } else {
+            
+            backgroundImage.isHidden = true
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.isHidden = isEmpty
         tableView.backgroundView?.contentMode = .scaleAspectFit
         
         //tableBackground.contentMode = .scaleAspectFit
@@ -29,23 +49,29 @@ class AllListsTableViewController: UITableViewController {
             getAllItems =  UserDefaults.standard.array(forKey: "allLists") as! [String]
         }
         tableView.tableFooterView = UIView(frame: .zero)
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        
         self.navigationItem.leftBarButtonItem = self.editButtonItem
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        isEmpty = false
         tableView.reloadData()
+        
+        emptyCells()
     }
     // MARK: - Table view data source
 
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        isEmpty = true
+        
         return 1
     }
 
@@ -61,10 +87,6 @@ class AllListsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        if isEmpty == true {
-            //tableView.backgroundView = UIImageView(image: UIImage(named: "toDoEmpty.00\(Int.random(in: 1...4)).png"))
-        }
-        
         cell.textLabel?.text = getAllItems[indexPath.row]
         // Configure the cell...
 
@@ -88,6 +110,7 @@ class AllListsTableViewController: UITableViewController {
             getAllItems.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .right)
             tableView.reloadData()
+            emptyCells()
             
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -137,7 +160,20 @@ class AllListsTableViewController: UITableViewController {
         let action = UIAlertAction(title: "Add list", style: .default) { (alertAction) in
             if !(textFieldText.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
                 getAllItems.insert(textFieldText.text!, at: getAllItems.count)
+                self.isEmpty = false
                 self.tableView.reloadData()
+                self.emptyCells()
+                if getAllItems.count == 0 {
+                    print("empty cells")
+                    self.backgroundImage.isHidden = false
+                    self.backgroundImage.sizeToFit()
+                    self.backgroundImage.contentMode = .scaleAspectFit
+                    self.backgroundImage.image = UIImage(named: "toDoEmpty.00\(Int.random(in: 1...4)).png")
+                    self.tableView.backgroundView = self.backgroundImage
+                } else {
+                    
+                    self.backgroundImage.isHidden = true
+                }
             } else {
                 print("empty")
             }
