@@ -13,10 +13,21 @@ class DetailTableViewController: UITableViewController, UITextFieldDelegate {
     
     @IBOutlet weak var markAsDone: UILabel!
     @IBOutlet weak var informationLink: UITextField!
-    
+    @IBOutlet weak var remindMeOrNot: UISwitch!
+    @IBOutlet weak var excusesTextView: UITextView!
+    @IBOutlet weak var urlTextField: UITextField!
+    @IBOutlet weak var notesTextView: UITextView!
+    @IBOutlet weak var procrastinateDatePicker: UIDatePicker!
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if !(informationLink.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
+            let s = SFSafariViewController(url: URL(string: (informationLink.text?.trimmingCharacters(in: .whitespaces))!)!)
+            self.present(s, animated: true, completion: nil)
+        }
+        return true
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.title = selected
         
         if UserDefaults.standard.bool(forKey: "\(listTitle!) \(selected!) isDone") == false {
@@ -24,67 +35,16 @@ class DetailTableViewController: UITableViewController, UITextFieldDelegate {
         } else {
             markAsDone.text = "It's not done!"
         }
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        //MARK: - Set up
+        if UserDefaults.standard.object(forKey: "\(listTitle!) \(selected!) procrastinate") != nil {
+            procrastinateDatePicker.date = UserDefaults.standard.object(forKey: "\(listTitle!) \(selected!) procrastinate") as! Date
+            remindMeOrNot.isOn = UserDefaults.standard.bool(forKey: "\(listTitle!) \(selected!) remindMeOrNot")
+            excusesTextView.text = UserDefaults.standard.string(forKey: "\(listTitle!) \(selected!) excuses")
+            urlTextField.text = UserDefaults.standard.string(forKey: "\(listTitle!) \(selected!) url")
+            notesTextView.text = UserDefaults.standard.string(forKey: "\(listTitle!) \(selected!) notes")
+        }
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath == IndexPath.init(row: 0, section: 3) {
@@ -108,5 +68,14 @@ class DetailTableViewController: UITableViewController, UITextFieldDelegate {
             let s = SFSafariViewController(url: URL(string: (informationLink.text?.trimmingCharacters(in: .whitespaces))!)!)
             self.present(s, animated: true, completion: nil)
         }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        UserDefaults.standard.set(procrastinateDatePicker.date, forKey: "\(listTitle!) \(selected!) procrastinate")
+        UserDefaults.standard.set(remindMeOrNot.isOn, forKey: "\(listTitle!) \(selected!) remindMeOrNot")
+        UserDefaults.standard.set(excusesTextView.text, forKey: "\(listTitle!) \(selected!) excuses")
+        UserDefaults.standard.set(urlTextField.text, forKey: "\(listTitle!) \(selected!) url")
+        UserDefaults.standard.set(notesTextView.text, forKey: "\(listTitle!) \(selected!) notes")
     }
 }

@@ -159,8 +159,8 @@ class AllListsTableViewController: UITableViewController {
         
         let action = UIAlertAction(title: "Add list", style: .default) { (alertAction) in
             if !(textFieldText.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
-                getAllItems.insert(textFieldText.text!, at: getAllItems.count)
                 self.isEmpty = false
+                getAllItems.append(textFieldText.text!)
                 self.tableView.reloadData()
                 self.emptyCells()
                 if getAllItems.count == 0 {
@@ -174,6 +174,7 @@ class AllListsTableViewController: UITableViewController {
                     
                     self.backgroundImage.isHidden = true
                 }
+                
             } else {
                 print("empty")
             }
@@ -183,6 +184,11 @@ class AllListsTableViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
         
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        UserDefaults.standard.set(getAllItems, forKey: "allLists")
+        print(UserDefaults.standard.array(forKey: "allLists")!)
     }
     
 }

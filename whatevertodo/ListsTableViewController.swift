@@ -12,11 +12,33 @@ var selected:String?
 
 class ListsTableViewController: UITableViewController {
     
+    let backgroundImage = UIImageView()
+    var listContent = ["This list is empty"]
+    
+    func emptyCells() {
+        let rect = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+        
+        
+        backgroundImage.frame = rect
+        
+        if listContent.count == 0 {
+            print("empty cells")
+            backgroundImage.isHidden = false
+            backgroundImage.sizeToFit()
+            backgroundImage.contentMode = .scaleAspectFit
+            backgroundImage.image = UIImage(named: "toDoEmpty.00\(Int.random(in: 1...4)).png")
+            self.tableView.backgroundView = backgroundImage
+        } else {
+            
+            backgroundImage.isHidden = true
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         tableView.reloadData()
     }
-    var listContent = ["This list is empty"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,6 +98,8 @@ class ListsTableViewController: UITableViewController {
             // Delete the row from the data source
             listContent.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .right)
+            tableView.reloadData()
+            emptyCells()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -115,6 +139,17 @@ class ListsTableViewController: UITableViewController {
         let action = UIAlertAction(title: "Add task", style: .default) { (alertAction) in
             if !(textFieldText.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
                 self.listContent.insert(textFieldText.text!, at: self.listContent.count)
+                if self.listContent.count == 0 {
+                    print("empty cells")
+                    self.backgroundImage.isHidden = false
+                    self.backgroundImage.sizeToFit()
+                    self.backgroundImage.contentMode = .scaleAspectFit
+                    self.backgroundImage.image = UIImage(named: "toDoEmpty.00\(Int.random(in: 1...4)).png")
+                    self.tableView.backgroundView = self.backgroundImage
+                } else {
+                    
+                    self.backgroundImage.isHidden = true
+                }
                 self.tableView.reloadData()
             } else {
                 print("empty")
