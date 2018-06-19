@@ -13,11 +13,17 @@ var getAllItems:[String] = ["stuff"]
 
 class AllListsTableViewController: UITableViewController {
 
+    
+    var isEmpty = false
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableView.isHidden = isEmpty
+        let tableBackground = tableView.backgroundView as! UIImageView
+        tableBackground.image = UIImage(named: "hello.png")
+        tableBackground.contentMode = .scaleAspectFit
+        
         if UserDefaults.standard.array(forKey: "allLists") == nil {
-            getAllItems =  ["Get Started!", "Rich people"]
+            getAllItems =  ["Get Started!"]
         } else {
             getAllItems =  UserDefaults.standard.array(forKey: "allLists") as! [String]
         }
@@ -29,16 +35,26 @@ class AllListsTableViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem = self.editButtonItem
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        tableView.reloadData()
+    }
     // MARK: - Table view data source
 
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
+        isEmpty = true
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return getAllItems.count
+        if getAllItems.count == 0 {
+            isEmpty = true
+            return 1
+        } else {return getAllItems.count}
+        
     }
 
     
